@@ -4,9 +4,11 @@ const dotenv = require("dotenv");
 const fs = require("fs");
 const path = require("path");
 
-const db = require("./config/database");
-
+// Load environment variables FIRST
 dotenv.config();
+
+// Load database AFTER environment variables
+const db = require("./config/database");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -28,12 +30,18 @@ app.use(express.json());
 
 async function initializeDatabase() {
   try {
+    console.log("Connecting to PostgreSQL...");
+
     const schemaPath = path.join(
       __dirname,
       "..",
       "database",
       "schema.sql"
     );
+
+    if (!fs.existsSync(schemaPath)) {
+      throw new Error(`Schema file not found: ${schemaPath}`);
+    }
 
     const schema = fs.readFileSync(schemaPath, "utf8");
 
