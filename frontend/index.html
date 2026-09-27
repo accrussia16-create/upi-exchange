@@ -1,0 +1,1484 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="UPI Exchange - Fast and simple currency exchange">
+  <title>UPI Exchange</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- =========================
+       AUTH SCREEN
+  ========================== -->
+  <section id="authScreen" class="auth-screen">
+
+    <div class="auth-brand">
+      <div class="brand-mark">U</div>
+      <div>
+        <div class="brand-name">UPI Exchange</div>
+        <div class="brand-subtitle">Fast & Simple Currency Exchange</div>
+      </div>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="loginView" class="auth-card">
+
+      <div class="auth-heading">
+        <h1>Welcome back</h1>
+        <p>Login to access your exchange account.</p>
+      </div>
+
+      <form id="loginForm">
+
+        <div class="form-group">
+          <label for="loginIdentifier">Username or Phone</label>
+          <input
+            id="loginIdentifier"
+            type="text"
+            placeholder="Enter username or phone"
+            autocomplete="username"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <div class="label-row">
+            <label for="loginPassword">Password</label>
+            <button type="button" class="text-button" id="forgotPasswordBtn">
+              Forgot password?
+            </button>
+          </div>
+
+          <div class="password-field">
+            <input
+              id="loginPassword"
+              type="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            >
+            <button type="button" class="password-toggle" data-target="loginPassword">
+              Show
+            </button>
+          </div>
+        </div>
+
+        <button class="primary-button full-width" type="submit">
+          Login
+        </button>
+
+      </form>
+
+      <div class="auth-switch">
+        Don't have an account?
+        <button type="button" class="text-button" id="showRegisterBtn">
+          Create Account
+        </button>
+      </div>
+
+    </div>
+
+
+    <!-- REGISTER -->
+    <div id="registerView" class="auth-card hidden">
+
+      <div class="auth-heading">
+        <h1>Create account</h1>
+        <p>Open your UPI Exchange account.</p>
+      </div>
+
+      <form id="registerForm">
+
+        <div class="form-group">
+          <label for="registerUsername">Username</label>
+          <input
+            id="registerUsername"
+            type="text"
+            placeholder="Choose a username"
+            autocomplete="username"
+            minlength="3"
+            maxlength="30"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="registerPhone">Phone Number</label>
+
+          <div class="phone-input">
+            <span class="country-code">+92</span>
+
+            <input
+              id="registerPhone"
+              type="tel"
+              placeholder="3XX XXXXXXX"
+              maxlength="10"
+              inputmode="numeric"
+              autocomplete="tel"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="registerEmail">Email</label>
+          <input
+            id="registerEmail"
+            type="email"
+            placeholder="you@example.com"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="registerPassword">Password</label>
+
+          <div class="password-field">
+            <input
+              id="registerPassword"
+              type="password"
+              placeholder="Create a password"
+              autocomplete="new-password"
+              minlength="8"
+              required
+            >
+
+            <button type="button" class="password-toggle" data-target="registerPassword">
+              Show
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="registerConfirmPassword">Confirm Password</label>
+
+          <div class="password-field">
+            <input
+              id="registerConfirmPassword"
+              type="password"
+              placeholder="Repeat your password"
+              autocomplete="new-password"
+              minlength="8"
+              required
+            >
+
+            <button type="button" class="password-toggle" data-target="registerConfirmPassword">
+              Show
+            </button>
+          </div>
+        </div>
+
+        <label class="checkbox-row">
+          <input id="agreeTerms" type="checkbox" required>
+          <span>
+            I agree to the Terms of Service and Privacy Policy.
+          </span>
+        </label>
+
+        <button class="primary-button full-width" type="submit">
+          Create Account
+        </button>
+
+      </form>
+
+      <div class="auth-switch">
+        Already have an account?
+        <button type="button" class="text-button" id="showLoginBtn">
+          Login
+        </button>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       MAIN APPLICATION
+  ========================== -->
+  <div id="appShell" class="app-shell hidden">
+
+    <!-- MOBILE OVERLAY -->
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="sidebar">
+
+      <div class="sidebar-brand">
+        <div class="brand-mark">U</div>
+
+        <div>
+          <div class="brand-name">UPI Exchange</div>
+          <div class="brand-subtitle">Exchange Platform</div>
+        </div>
+      </div>
+
+
+      <nav class="sidebar-nav">
+
+        <button class="nav-item active" data-page="home">
+          <span class="nav-icon">⌂</span>
+          <span>Dashboard</span>
+        </button>
+
+        <button class="nav-item" data-page="exchange">
+          <span class="nav-icon">⇄</span>
+          <span>Exchange</span>
+        </button>
+
+        <button class="nav-item" data-page="wallet">
+          <span class="nav-icon">▣</span>
+          <span>Wallet</span>
+        </button>
+
+        <button class="nav-item" data-page="transactions">
+          <span class="nav-icon">☷</span>
+          <span>Transactions</span>
+        </button>
+
+        <button class="nav-item" data-page="notifications">
+          <span class="nav-icon">♢</span>
+          <span>Notifications</span>
+          <span class="notification-count">2</span>
+        </button>
+
+        <button class="nav-item" data-page="profile">
+          <span class="nav-icon">◉</span>
+          <span>Profile & Security</span>
+        </button>
+
+        <button class="nav-item" data-page="support">
+          <span class="nav-icon">?</span>
+          <span>Support</span>
+        </button>
+
+      </nav>
+
+
+      <div class="sidebar-bottom">
+
+        <div class="secure-box">
+          <div class="secure-icon">✓</div>
+          <div>
+            <strong>Account Secure</strong>
+            <small>Your account is protected.</small>
+          </div>
+        </div>
+
+        <button id="logoutBtn" class="logout-button">
+          <span>↪</span>
+          Logout
+        </button>
+
+      </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+      <!-- TOPBAR -->
+      <header class="topbar">
+
+        <div class="topbar-left">
+          <button id="mobileMenuBtn" class="mobile-menu-button">
+            ☰
+          </button>
+
+          <div>
+            <div class="page-eyebrow">UPI EXCHANGE</div>
+            <h2 id="pageTitle">Dashboard</h2>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+
+          <button
+            class="icon-button notification-button"
+            data-page="notifications"
+            title="Notifications"
+          >
+            ♢
+            <span class="notification-dot"></span>
+          </button>
+
+          <div class="user-mini">
+
+            <div class="avatar" id="topAvatar">
+              U
+            </div>
+
+            <div class="user-mini-info">
+              <strong id="topUsername">User</strong>
+              <span id="topPhone">+92</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </header>
+
+
+      <!-- PAGE CONTAINER -->
+      <div class="page-container">
+
+
+        <!-- =========================
+             DASHBOARD
+        ========================== -->
+        <section id="page-home" class="page active">
+
+          <div class="welcome-row">
+
+            <div>
+              <p class="muted">Welcome back,</p>
+              <h1 id="welcomeUsername">User</h1>
+              <p class="muted">
+                Manage your balance and exchange currencies easily.
+              </p>
+            </div>
+
+            <button class="primary-button" data-page="exchange">
+              Start Exchange
+            </button>
+
+          </div>
+
+
+          <!-- BALANCE -->
+          <div class="balance-card">
+
+            <div class="balance-glow"></div>
+
+            <div class="balance-top">
+
+              <div>
+                <span class="balance-label">TOTAL BALANCE</span>
+
+                <div class="balance-amount">
+                  <span id="mainBalance">0.00</span>
+                  <span class="balance-currency">PKR</span>
+                </div>
+              </div>
+
+              <div class="balance-status">
+                <span class="status-dot"></span>
+                Available
+              </div>
+
+            </div>
+
+            <div class="balance-actions">
+
+              <button class="balance-action" data-action="deposit">
+                <span>↓</span>
+                Deposit
+              </button>
+
+              <button class="balance-action" data-action="withdraw">
+                <span>↑</span>
+                Withdraw
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- QUICK STATS -->
+          <div class="stats-grid">
+
+            <div class="stat-card">
+              <span class="stat-icon green">⇄</span>
+              <div>
+                <span class="stat-label">Exchanges</span>
+                <strong id="exchangeCount">0</strong>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <span class="stat-icon blue">↓</span>
+              <div>
+                <span class="stat-label">Deposits</span>
+                <strong id="depositCount">0</strong>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <span class="stat-icon purple">↑</span>
+              <div>
+                <span class="stat-label">Withdrawals</span>
+                <strong id="withdrawCount">0</strong>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <span class="stat-icon orange">♢</span>
+              <div>
+                <span class="stat-label">Pending</span>
+                <strong id="pendingCount">0</strong>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="two-column">
+
+            <!-- EXCHANGE -->
+            <div class="panel">
+
+              <div class="panel-heading">
+                <div>
+                  <h3>Quick Exchange</h3>
+                  <p>Exchange currencies at the current rate.</p>
+                </div>
+
+                <button class="panel-link" data-page="exchange">
+                  View full exchange
+                </button>
+              </div>
+
+
+              <form id="quickExchangeForm">
+
+                <div class="exchange-fields">
+
+                  <div class="currency-field">
+
+                    <label>You Send</label>
+
+                    <div class="currency-input">
+                      <input
+                        id="quickAmount"
+                        type="number"
+                        min="1"
+                        step="0.01"
+                        value="1000"
+                        required
+                      >
+
+                      <select id="quickFrom">
+                        <option value="INR">INR</option>
+                        <option value="USD">USD</option>
+                        <option value="AED">AED</option>
+                        <option value="PKR">PKR</option>
+                      </select>
+                    </div>
+
+                  </div>
+
+
+                  <div class="swap-icon">⇄</div>
+
+
+                  <div class="currency-field">
+
+                    <label>You Receive</label>
+
+                    <div class="currency-input readonly">
+                      <input
+                        id="quickReceive"
+                        type="text"
+                        value="3,200.00"
+                        readonly
+                      >
+
+                      <select id="quickTo">
+                        <option value="PKR">PKR</option>
+                        <option value="INR">INR</option>
+                        <option value="USD">USD</option>
+                        <option value="AED">AED</option>
+                      </select>
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+                <div class="rate-info">
+                  <span>Current rate</span>
+                  <strong id="quickRate">1 INR = 3.20 PKR</strong>
+                </div>
+
+
+                <button type="submit" class="primary-button full-width">
+                  Continue Exchange
+                </button>
+
+              </form>
+
+            </div>
+
+
+            <!-- PAYMENT METHODS -->
+            <div class="panel">
+
+              <div class="panel-heading">
+                <div>
+                  <h3>Payment Methods</h3>
+                  <p>Available methods for your transactions.</p>
+                </div>
+              </div>
+
+
+              <div class="payment-method-list">
+
+                <button class="payment-method" data-method="UPI">
+
+                  <span class="method-icon upi">U</span>
+
+                  <span class="method-info">
+                    <strong>UPI</strong>
+                    <small>Indian UPI</small>
+                  </span>
+
+                  <span class="method-arrow">›</span>
+
+                </button>
+
+
+                <button class="payment-method" data-method="EasyPaisa">
+
+                  <span class="method-icon easypaisa">E</span>
+
+                  <span class="method-info">
+                    <strong>EasyPaisa</strong>
+                    <small>Pakistan</small>
+                  </span>
+
+                  <span class="method-arrow">›</span>
+
+                </button>
+
+
+                <button class="payment-method" data-method="JazzCash">
+
+                  <span class="method-icon jazzcash">J</span>
+
+                  <span class="method-info">
+                    <strong>JazzCash</strong>
+                    <small>Pakistan</small>
+                  </span>
+
+                  <span class="method-arrow">›</span>
+
+                </button>
+
+
+                <button class="payment-method" data-method="USDT">
+
+                  <span class="method-icon usdt">₮</span>
+
+                  <span class="method-info">
+                    <strong>USDT</strong>
+                    <small>Crypto wallet</small>
+                  </span>
+
+                  <span class="method-arrow">›</span>
+
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- RECENT TRANSACTIONS -->
+          <div class="panel">
+
+            <div class="panel-heading">
+
+              <div>
+                <h3>Recent Transactions</h3>
+                <p>Your latest account activity.</p>
+              </div>
+
+              <button class="panel-link" data-page="transactions">
+                View all
+              </button>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+              <table class="transactions-table">
+
+                <thead>
+                  <tr>
+                    <th>Transaction</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+
+                <tbody id="recentTransactionsBody">
+
+                  <tr class="empty-row">
+                    <td colspan="5">
+                      No transactions yet.
+                    </td>
+                  </tr>
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =========================
+             EXCHANGE PAGE
+        ========================== -->
+        <section id="page-exchange" class="page">
+
+          <div class="page-intro">
+            <h1>Currency Exchange</h1>
+            <p>Choose the currencies and amount you want to exchange.</p>
+          </div>
+
+
+          <div class="exchange-layout">
+
+            <div class="panel exchange-panel">
+
+              <div class="exchange-large">
+
+                <div class="currency-field large">
+
+                  <label>You Send</label>
+
+                  <div class="currency-input">
+
+                    <input
+                      id="exchangeAmount"
+                      type="number"
+                      min="1"
+                      step="0.01"
+                      value="1000"
+                    >
+
+                    <select id="exchangeFrom">
+                      <option value="INR">INR</option>
+                      <option value="USD">USD</option>
+                      <option value="AED">AED</option>
+                      <option value="PKR">PKR</option>
+                    </select>
+
+                  </div>
+
+                </div>
+
+
+                <button id="swapCurrencies" class="big-swap">
+                  ⇅
+                </button>
+
+
+                <div class="currency-field large">
+
+                  <label>You Receive</label>
+
+                  <div class="currency-input readonly">
+
+                    <input
+                      id="exchangeReceive"
+                      type="text"
+                      readonly
+                    >
+
+                    <select id="exchangeTo">
+                      <option value="PKR">PKR</option>
+                      <option value="INR">INR</option>
+                      <option value="USD">USD</option>
+                      <option value="AED">AED</option>
+                    </select>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="exchange-summary">
+
+                <div>
+                  <span>Exchange rate</span>
+                  <strong id="exchangeRate">1 INR = 3.20 PKR</strong>
+                </div>
+
+                <div>
+                  <span>Estimated receive</span>
+                  <strong id="exchangeSummaryReceive">3,200 PKR</strong>
+                </div>
+
+              </div>
+
+
+              <div class="form-group">
+                <label for="receiveMethod">Receive Method</label>
+
+                <select id="receiveMethod">
+                  <option value="UPI">UPI</option>
+                  <option value="EasyPaisa">EasyPaisa</option>
+                  <option value="JazzCash">JazzCash</option>
+                  <option value="USDT">USDT</option>
+                </select>
+              </div>
+
+
+              <div class="form-group">
+
+                <label for="receiverNumber">
+                  Receiver Number / Wallet Address
+                </label>
+
+                <input
+                  id="receiverNumber"
+                  type="text"
+                  placeholder="Enter receiver details"
+                >
+
+              </div>
+
+
+              <button id="startExchangeBtn" class="primary-button full-width">
+                Continue Exchange
+              </button>
+
+            </div>
+
+
+            <div class="side-info">
+
+              <div class="info-card">
+                <span class="info-icon">✓</span>
+
+                <h3>Clear Exchange Rate</h3>
+
+                <p>
+                  The applicable exchange rate is displayed before
+                  you continue.
+                </p>
+              </div>
+
+
+              <div class="info-card">
+                <span class="info-icon">⌁</span>
+
+                <h3>Transaction Tracking</h3>
+
+                <p>
+                  Every exchange receives a unique transaction reference.
+                </p>
+              </div>
+
+
+              <div class="info-card">
+                <span class="info-icon">▣</span>
+
+                <h3>Secure Processing</h3>
+
+                <p>
+                  Transaction status is controlled by the platform.
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =========================
+             WALLET
+        ========================== -->
+        <section id="page-wallet" class="page">
+
+          <div class="page-intro">
+            <h1>Wallet</h1>
+            <p>Manage your available funds.</p>
+          </div>
+
+
+          <div class="wallet-hero">
+
+            <div>
+              <span>AVAILABLE BALANCE</span>
+
+              <h1>
+                <span id="walletBalance">0.00</span>
+                <small>PKR</small>
+              </h1>
+
+              <p>Available for eligible transactions.</p>
+            </div>
+
+            <div class="wallet-buttons">
+
+              <button class="primary-button" data-action="deposit">
+                Deposit
+              </button>
+
+              <button class="secondary-button" data-action="withdraw">
+                Withdraw
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="wallet-grid">
+
+            <div class="panel">
+
+              <div class="panel-heading">
+                <div>
+                  <h3>Deposit</h3>
+                  <p>Add funds to your wallet.</p>
+                </div>
+              </div>
+
+              <div class="wallet-action-large">
+                <span class="large-action-icon">↓</span>
+
+                <h3>Add Funds</h3>
+
+                <p>
+                  Select an available payment method to start a deposit.
+                </p>
+
+                <button class="primary-button" data-action="deposit">
+                  Start Deposit
+                </button>
+              </div>
+
+            </div>
+
+
+            <div class="panel">
+
+              <div class="panel-heading">
+                <div>
+                  <h3>Withdraw</h3>
+                  <p>Request a withdrawal from your balance.</p>
+                </div>
+              </div>
+
+              <div class="wallet-action-large">
+                <span class="large-action-icon">↑</span>
+
+                <h3>Withdraw Funds</h3>
+
+                <p>
+                  Submit a withdrawal request using an available method.
+                </p>
+
+                <button class="secondary-button" data-action="withdraw">
+                  Start Withdrawal
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =========================
+             TRANSACTIONS
+        ========================== -->
+        <section id="page-transactions" class="page">
+
+          <div class="page-intro">
+            <h1>Transactions</h1>
+            <p>View your complete transaction history.</p>
+          </div>
+
+
+          <div class="filter-row">
+
+            <button class="filter-button active" data-filter="all">
+              All
+            </button>
+
+            <button class="filter-button" data-filter="exchange">
+              Exchanges
+            </button>
+
+            <button class="filter-button" data-filter="deposit">
+              Deposits
+            </button>
+
+            <button class="filter-button" data-filter="withdrawal">
+              Withdrawals
+            </button>
+
+          </div>
+
+
+          <div class="panel">
+
+            <div class="table-wrapper">
+
+              <table class="transactions-table">
+
+                <thead>
+                  <tr>
+                    <th>Reference</th>
+                    <th>Type</th>
+                    <th>Details</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+
+                <tbody id="transactionsBody">
+
+                  <tr class="empty-row">
+                    <td colspan="6">
+                      No transactions found.
+                    </td>
+                  </tr>
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =========================
+             NOTIFICATIONS
+        ========================== -->
+        <section id="page-notifications" class="page">
+
+          <div class="page-intro">
+            <h1>Notifications</h1>
+            <p>Important updates about your account and transactions.</p>
+          </div>
+
+
+          <div class="notification-list">
+
+            <div class="notification-card unread">
+
+              <div class="notification-icon green">✓</div>
+
+              <div>
+                <strong>Welcome to UPI Exchange</strong>
+
+                <p>
+                  Your account is ready. You can start using the exchange
+                  service from your dashboard.
+                </p>
+
+                <small>Just now</small>
+              </div>
+
+            </div>
+
+
+            <div class="notification-card unread">
+
+              <div class="notification-icon blue">i</div>
+
+              <div>
+                <strong>Account Security</strong>
+
+                <p>
+                  Keep your password private and never share your login
+                  information.
+                </p>
+
+                <small>Today</small>
+              </div>
+
+            </div>
+
+
+            <div class="notification-card">
+
+              <div class="notification-icon purple">↔</div>
+
+              <div>
+                <strong>Exchange Updates</strong>
+
+                <p>
+                  Exchange rates may change depending on the selected
+                  currencies and current platform rates.
+                </p>
+
+                <small>Recently</small>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =========================
+             PROFILE
+        ========================== -->
+        <section id="page-profile" class="page">
+
+          <div class="page-intro">
+            <h1>Profile & Security</h1>
+            <p>Manage your account information and security.</p>
+          </div>
+
+
+          <div class="profile-grid">
+
+            <div class="panel">
+
+              <div class="panel-heading">
+                <div>
+                  <h3>Personal Information</h3>
+                  <p>Your account details.</p>
+                </div>
+              </div>
+
+
+              <div class="profile-avatar">
+                <div class="large-avatar" id="profileAvatar">
+                  U
+                </div>
+
+                <div>
+                  <strong id="profileName">User</strong>
+                  <span>Customer account</span>
+                </div>
+              </div>
+
+
+              <div class="profile-details">
+
+                <div class="detail-row">
+                  <span>Username</span>
+                  <strong id="profileUsername">—</strong>
+                </div>
+
+                <div class="detail-row">
+                  <span>Phone</span>
+                  <strong id="profilePhone">—</strong>
+                </div>
+
+                <div class="detail-row">
+                  <span>Email</span>
+                  <strong id="profileEmail">—</strong>
+                </div>
+
+                <div class="detail-row">
+                  <span>Account Status</span>
+                  <strong class="success-text">Active</strong>
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div class="panel">
+
+              <div class="panel-heading">
+                <div>
+                  <h3>Password & Security</h3>
+                  <p>Keep your account protected.</p>
+                </div>
+              </div>
+
+
+              <form id="changePasswordForm">
+
+                <div class="form-group">
+                  <label for="currentPassword">Current Password</label>
+                  <input
+                    id="currentPassword"
+                    type="password"
+                    required
+                  >
+                </div>
+
+                <div class="form-group">
+                  <label for="newPassword">New Password</label>
+                  <input
+                    id="newPassword"
+                    type="password"
+                    minlength="8"
+                    required
+                  >
+                </div>
+
+                <div class="form-group">
+                  <label for="confirmNewPassword">
+                    Confirm New Password
+                  </label>
+
+                  <input
+                    id="confirmNewPassword"
+                    type="password"
+                    minlength="8"
+                    required
+                  >
+                </div>
+
+                <button class="primary-button" type="submit">
+                  Change Password
+                </button>
+
+              </form>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =========================
+             SUPPORT
+        ========================== -->
+        <section id="page-support" class="page">
+
+          <div class="page-intro">
+            <h1>Support</h1>
+            <p>Need help? Contact the support team.</p>
+          </div>
+
+
+          <div class="support-grid">
+
+            <div class="support-card">
+
+              <span class="support-icon">?</span>
+
+              <h3>Contact Support</h3>
+
+              <p>
+                Send us a message about an account or transaction issue.
+              </p>
+
+              <button class="primary-button" id="contactSupportBtn">
+                Contact Support
+              </button>
+
+            </div>
+
+
+            <div class="support-card">
+
+              <span class="support-icon">▣</span>
+
+              <h3>Transaction Help</h3>
+
+              <p>
+                Keep your transaction reference ready when contacting support.
+              </p>
+
+              <button class="secondary-button" data-page="transactions">
+                View Transactions
+              </button>
+
+            </div>
+
+
+            <div class="support-card">
+
+              <span class="support-icon">✓</span>
+
+              <h3>Security</h3>
+
+              <p>
+                Never share your password or account credentials with anyone.
+              </p>
+
+              <button class="secondary-button" data-page="profile">
+                Security Settings
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="panel legal-panel">
+
+            <div class="panel-heading">
+              <div>
+                <h3>Important Information</h3>
+                <p>Platform policies and information.</p>
+              </div>
+            </div>
+
+            <div class="legal-links">
+              <button>Terms of Service</button>
+              <button>Privacy Policy</button>
+              <button>Exchange Policy</button>
+              <button>Payment Policy</button>
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =========================
+             PAYMENT SESSION
+        ========================== -->
+        <section id="page-payment" class="page">
+
+          <div class="page-intro">
+            <button id="backToExchange" class="back-button">
+              ← Back
+            </button>
+
+            <h1>Payment</h1>
+            <p>Complete your payment for this exchange.</p>
+          </div>
+
+
+          <div class="payment-layout">
+
+            <div class="panel payment-main">
+
+              <div class="payment-status-top">
+
+                <div class="status-pill pending">
+                  <span class="status-dot"></span>
+                  Payment Pending
+                </div>
+
+                <div class="payment-reference">
+                  Reference:
+                  <strong id="paymentReference">PAY-XXXXXX</strong>
+                </div>
+
+              </div>
+
+
+              <!-- TIMER ONLY HERE -->
+              <div id="paymentTimerBox" class="payment-timer-box">
+
+                <span>Payment session expires in</span>
+
+                <strong id="paymentTimer">
+                  15:00
+                </strong>
+
+              </div>
+
+
+              <div class="payment-summary">
+
+                <div class="payment-method-large">
+
+                  <span id="paymentMethodIcon" class="method-icon easypaisa">
+                    E
+                  </span>
+
+                  <div>
+                    <strong id="paymentMethodName">
+                      EasyPaisa
+                    </strong>
+
+                    <small>
+                      Selected payment method
+                    </small>
+                  </div>
+
+                </div>
+
+
+                <div class="payment-amount">
+
+                  <span>You Send</span>
+
+                  <strong>
+                    <span id="paymentSendAmount">1,000</span>
+                    <small id="paymentSendCurrency">INR</small>
+                  </strong>
+
+                </div>
+
+
+                <div class="payment-arrow">
+                  ↓
+                </div>
+
+
+                <div class="payment-amount receive">
+
+                  <span>You Receive</span>
+
+                  <strong>
+                    <span id="paymentReceiveAmount">3,200</span>
+                    <small id="paymentReceiveCurrency">PKR</small>
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+              <div class="payment-details-box">
+
+                <div class="detail-row">
+                  <span>Payment destination</span>
+                  <strong id="paymentDestination">
+                    Not provided
+                  </strong>
+                </div>
+
+                <div class="detail-row">
+                  <span>Exchange rate</span>
+                  <strong id="paymentPageRate">
+                    1 INR = 3.20 PKR
+                  </strong>
+                </div>
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label for="transactionReference">
+                  Payment Reference / Transaction ID
+                </label>
+
+                <input
+                  id="transactionReference"
+                  type="text"
+                  placeholder="Enter your payment reference"
+                >
+
+                <small class="field-help">
+                  Enter the reference shown by your payment provider.
+                </small>
+
+              </div>
+
+
+              <div class="payment-actions">
+
+                <button
+                  id="cancelPaymentBtn"
+                  class="secondary-button"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  id="submitPaymentBtn"
+                  class="primary-button"
+                >
+                  I Have Paid
+                </button>
+
+              </div>
+
+            </div>
+
+
+            <div class="side-info">
+
+              <div class="info-card">
+
+                <span class="info-icon">!</span>
+
+                <h3>Payment Safety</h3>
+
+                <p>
+                  Verify the payment destination and amount before
+                  completing your transaction.
+                </p>
+
+              </div>
+
+
+              <div class="info-card">
+
+                <span class="info-icon">◷</span>
+
+                <h3>Payment Session</h3>
+
+                <p>
+                  This payment session has a limited validity period.
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+
+    </main>
+
+  </div>
+
+
+  <!-- =========================
+       MODAL
+  ========================== -->
+  <div id="modalOverlay" class="modal-overlay hidden">
+
+    <div class="modal">
+
+      <button id="closeModalBtn" class="modal-close">
+        ×
+      </button>
+
+      <div id="modalContent"></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- TOAST -->
+  <div id="toastContainer" class="toast-container"></div>
+
+
+  <script src="app.js"></script>
+
+</body>
+</html>
+```
