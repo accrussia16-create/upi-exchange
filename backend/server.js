@@ -1,6 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const fs = require("fs");
+const path = require("path");
+
+const db = require("./config/database");
 
 dotenv.config();
 
@@ -17,6 +21,31 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
+// =========================
+// DATABASE INITIALIZATION
+// =========================
+
+async function initializeDatabase() {
+  try {
+    const schemaPath = path.join(
+      __dirname,
+      "..",
+      "database",
+      "schema.sql"
+    );
+
+    const schema = fs.readFileSync(schemaPath, "utf8");
+
+    await db.query(schema);
+
+    console.log("Database initialized successfully.");
+  } catch (error) {
+    console.error("Database initialization failed:");
+    console.error(error);
+    throw error;
+  }
+}
 
 // =========================
 // HEALTH CHECK
@@ -69,6 +98,17 @@ app.use((err, req, res, next) => {
 // START SERVER
 // =========================
 
-app.listen(PORT, () => {
-  console.log(`UPI-Exchange API running on port ${PORT}`);
-});
+async function startServer() {
+  try {
+    await initializeDatabase();
+
+    app.listen(PORT, () => {
+      console.log(`UPI-Exchange API running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Server could not start.");
+    process.exit(1);
+  }
+}
+
+startServer();
